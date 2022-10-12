@@ -26,6 +26,9 @@ const signup = async (req, res) => {
         // eslint-disable-next-line no-underscore-dangle
         const token = jwt.sign({ email: result.email, id: result._id }, SECRET_KEY);
 
+        console.log(token);
+
+        // eslint-disable-next-line object-shorthand
         res.status(201).json({ user: result, token });
     } catch (error) {
         console.log(error);
