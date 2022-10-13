@@ -11,8 +11,14 @@ app.use(express.json());
 app.use('/users', userRouter);
 app.use('/notes', noteRouter);
 
+// mongodb+srv://admin:<password>@cluster0.0yg8bty.mongodb.net/?retryWrites=true&w=majority
+// mongodb://localhost:27017/crud
+
 mongoose
-    .connect('mongodb://localhost:27017/crud')
+    .connect(
+        // eslint-disable-next-line comma-dangle
+        'mongodb+srv://admin:admin@cluster0.0yg8bty.mongodb.net/?retryWrites=true&w=majority'
+    )
     .then(() => {
         app.listen(PORT, () => {
             console.log(`Server started on port no. ${PORT}`);
