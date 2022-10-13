@@ -1,24 +1,26 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+const cors = require('cors');
+
 const userRouter = require('./routes/userRoutes');
 const noteRouter = require('./routes/noteRoutes');
 
 const app = express();
-const PORT = 27017;
-
+dotenv.config();
 app.use(express.json());
+app.use(cors());
+const PORT = process.env.PORT || 27017;
 
 app.use('/users', userRouter);
 app.use('/notes', noteRouter);
 
-// mongodb+srv://admin:<password>@cluster0.0yg8bty.mongodb.net/?retryWrites=true&w=majority
-// mongodb://localhost:27017/crud
+app.get('/', (req, res) => {
+    res.send('Notes API from Robin');
+});
 
 mongoose
-    .connect(
-        // eslint-disable-next-line comma-dangle
-        'mongodb+srv://admin:admin@cluster0.0yg8bty.mongodb.net/?retryWrites=true&w=majority'
-    )
+    .connect(process.env.MONGO_LIVE_URL)
     .then(() => {
         app.listen(PORT, () => {
             console.log(`Server started on port no. ${PORT}`);

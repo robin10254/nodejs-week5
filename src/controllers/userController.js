@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const userModel = require('../models/user');
 
-const SECRET_KEY = 'NOTESAPI';
+const { SECRET_KEY } = process.env;
 
 // eslint-disable-next-line consistent-return
 const signup = async (req, res) => {
@@ -54,7 +54,7 @@ const signin = async (req, res) => {
         // eslint-disable-next-line no-underscore-dangle
         const token = jwt.sign({ email: existingUser.email, id: existingUser._id }, SECRET_KEY);
 
-        res.status(201).json({ user: existingUser, token });
+        res.status(200).json({ user: existingUser, token });
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: 'Something went wrong' });
